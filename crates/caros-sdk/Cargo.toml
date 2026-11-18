@@ -1,0 +1,9 @@
+[package]
+name = "caros-sdk"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+caros-protocol = { path = "../caros-protocol", version = "0.1.0" }
+tokio.workspace = true
