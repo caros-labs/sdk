@@ -60,9 +60,17 @@ impl Session {
 fn response_matches(request: &Request, reply: &Reply) -> bool {
     match (request, reply) {
         (Request::ListApps, Reply::Apps(_)) => true,
+        (Request::MicrophoneStatus, Reply::MicrophoneStatus(_)) => true,
+        (Request::OpenMicrophone, Reply::MicrophoneOpened) => true,
+        (Request::SetMicrophoneMuted { .. }, Reply::Accepted) => true,
         (Request::AppStatus { id }, Reply::Status(status)) => *id == status.id,
         (Request::StartApp { .. } | Request::StopApp { .. }, Reply::Accepted) => true,
         (Request::Subscribe, Reply::Subscribed { .. }) => true,
+        (
+            Request::AcquireService { name } | Request::ServiceStatus { name },
+            Reply::Service(status),
+        ) => *name == status.name,
+        (Request::ReleaseService { .. }, Reply::Accepted) => true,
         _ => false,
     }
 }

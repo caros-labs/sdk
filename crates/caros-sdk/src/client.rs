@@ -9,8 +9,8 @@ use tokio::{sync::Mutex, time::timeout};
 /// Serializes control requests. No automatic replay: a timed-out start/stop may
 /// already have executed on Core. Reconnect and query status before retrying.
 pub struct ManagementClient {
-    path: PathBuf,
-    timeout: Duration,
+    pub(crate) path: PathBuf,
+    pub(crate) timeout: Duration,
     session: Mutex<Option<Session>>,
 }
 impl ManagementClient {
@@ -30,6 +30,12 @@ impl ManagementClient {
             timeout: duration,
             session: Mutex::new(Some(session)),
         })
+    }
+    pub fn microphone(&self) -> crate::Microphone<'_> {
+        crate::Microphone::new(self)
+    }
+    pub fn services(&self) -> crate::Services<'_> {
+        crate::Services::new(self)
     }
     pub fn apps(&self) -> Apps<'_> {
         Apps::new(self)
