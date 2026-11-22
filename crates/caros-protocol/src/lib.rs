@@ -3,6 +3,7 @@ mod app;
 mod id;
 mod message;
 pub mod microphone;
+pub mod playback;
 mod service;
 pub mod wire;
 

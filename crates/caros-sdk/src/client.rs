@@ -31,6 +31,9 @@ impl ManagementClient {
             session: Mutex::new(Some(session)),
         })
     }
+    pub fn playback(&self) -> crate::Playback<'_> {
+        crate::Playback::new(self)
+    }
     pub fn microphone(&self) -> crate::Microphone<'_> {
         crate::Microphone::new(self)
     }

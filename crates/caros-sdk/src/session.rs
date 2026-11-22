@@ -60,6 +60,11 @@ impl Session {
 fn response_matches(request: &Request, reply: &Reply) -> bool {
     match (request, reply) {
         (Request::ListApps, Reply::Apps(_)) => true,
+        (Request::PlaybackStatus, Reply::PlaybackStatus(_)) => true,
+        (Request::OpenPlayback, Reply::PlaybackOpened) => true,
+        (Request::SetPlaybackVolume { .. } | Request::SetMasterVolume { .. }, Reply::Accepted) => {
+            true
+        }
         (Request::MicrophoneStatus, Reply::MicrophoneStatus(_)) => true,
         (Request::OpenMicrophone, Reply::MicrophoneOpened) => true,
         (Request::SetMicrophoneMuted { .. }, Reply::Accepted) => true,

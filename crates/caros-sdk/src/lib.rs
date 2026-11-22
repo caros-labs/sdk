@@ -4,6 +4,11 @@ mod apps;
 mod client;
 mod error;
 mod microphone;
+mod playback;
+pub use playback::{
+    AppPlaybackStatus, PLAYBACK_RATE, PLAYBACK_SAMPLES, Playback, PlaybackStatus, PlaybackStream,
+    Volume,
+};
 mod services;
 pub use microphone::{Microphone, MicrophonePacket, MicrophoneStatus, MicrophoneStream};
 mod session;

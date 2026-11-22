@@ -30,15 +30,39 @@ impl ApiError {
 #[serde(tag = "method", content = "params", rename_all = "snake_case")]
 pub enum Request {
     ListApps,
+    PlaybackStatus,
+    OpenPlayback,
+    SetPlaybackVolume {
+        app: Option<AppId>,
+        level: Option<u8>,
+        muted: Option<bool>,
+    },
+    SetMasterVolume {
+        volume: crate::playback::Volume,
+    },
     MicrophoneStatus,
     OpenMicrophone,
-    SetMicrophoneMuted { muted: bool },
-    AcquireService { name: String },
-    ReleaseService { name: String },
-    ServiceStatus { name: String },
-    AppStatus { id: AppId },
-    StartApp { id: AppId },
-    StopApp { id: AppId },
+    SetMicrophoneMuted {
+        muted: bool,
+    },
+    AcquireService {
+        name: String,
+    },
+    ReleaseService {
+        name: String,
+    },
+    ServiceStatus {
+        name: String,
+    },
+    AppStatus {
+        id: AppId,
+    },
+    StartApp {
+        id: AppId,
+    },
+    StopApp {
+        id: AppId,
+    },
     Subscribe,
 }
 
@@ -53,6 +77,8 @@ pub enum ClientMessage {
 #[serde(tag = "type", content = "data", rename_all = "snake_case")]
 pub enum Reply {
     Apps(Vec<AppStatus>),
+    PlaybackStatus(crate::playback::PlaybackStatus),
+    PlaybackOpened,
     MicrophoneStatus(crate::microphone::MicrophoneStatus),
     MicrophoneOpened,
     Service(crate::ServiceStatus),
